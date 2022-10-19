@@ -12,3 +12,12 @@ export interface User {
   thumbnail: string;
   title: string;
 }
+export interface UserList {
+  userName: string;
+  id: number;
+}
+export interface signups {
+  name?: string;
+  email?: string;
+  password?: string;
+}

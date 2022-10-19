@@ -1,3 +1,4 @@
+
 import React, {FC} from 'react';
 import {
   GestureResponderEvent,
@@ -11,7 +12,9 @@ import {
   TextStyleIOS,
 } from 'react-native';
 interface IProps {
-  title?: string;
+  translateY?: object;
+  label?: string;
+  img?: boolean;
   buttonStyle?: StyleProp<ViewStyle>;
   labelStyle?: StyleProp<TextStyle>;
   onPress: (even: GestureResponderEvent) => void;
@@ -19,33 +22,38 @@ interface IProps {
 
 interface Styles {
   button: ViewStyle;
-  title: TextStyle;
-  links: TextStyleIOS;
-}
+  label: TextStyle;
+  links:TextStyleIOS;
+  }
 
 const styles = StyleSheet.create<Styles>({
   links: {
     backgroundColor: 'magenta',
   },
   button: {
+    marginTop: 20,
+    backgroundColor: 'gray',
+    marginHorizontal: 20,
+    borderRadius: 10,
+    height: 45,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
-  title: {
+  label: {
     color: '#000',
     fontWeight: 'bold',
     textAlign: 'center',
   },
 });
-const CustomButton: FC<IProps> = props => {
+const Button: FC<IProps> = props => {
   return (
     <TouchableOpacity onPress={props?.onPress}>
       <View style={[styles.button, props.buttonStyle]}>
-        <Text style={[styles.title, props.labelStyle]}>{props.title}</Text>
+        <Text style={[styles.label, props.labelStyle]}>{props.label}</Text>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default CustomButton;
+export default Button;

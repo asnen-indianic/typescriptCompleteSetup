@@ -1,13 +1,21 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {isReadyRef, navigationRef} from '../../NavigationService';
+import {checkUser} from '../networking/apiAction';
 import Screens from '../resources/constants';
 import AppNavigator from './AppNavigator';
 import AuthNavigator from './AuthNavigator';
 const Stack = createNativeStackNavigator();
-const MainNavigator: FC = () => {
-  const [user, setUser] = useState('');
+const MainNavigator = () => {
+  const [user, setUser] = useState<any>([]);
+  useEffect(() => {
+    checkUser().then(res => {
+      console.log('res iss ', res);
+      setUser(res);
+    });
+  }, []);
+
   return (
     <NavigationContainer
       onReady={() => (isReadyRef.current = true)}
@@ -16,7 +24,7 @@ const MainNavigator: FC = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        {!!user ? (
+        {user.length > 0 ? (
           <Stack.Screen component={AppNavigator} name={Screens.AppNavigator} />
         ) : (
           <Stack.Screen
