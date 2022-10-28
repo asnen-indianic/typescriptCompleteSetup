@@ -1,9 +1,15 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Text, View} from 'react-native';
+import {useDispatch} from 'react-redux';
 import MainNavigator from './navigators/MainNavigator';
+import {appStartAction} from './redux/actions/appAction';
 
 const SplashScreen: FC = () => {
   const [isShowSplash, setIsShowSplash] = useState<Boolean>(true);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(appStartAction());
+  }, [isShowSplash]);
   useEffect(() => {
     setTimeout(() => {
       setIsShowSplash(false);

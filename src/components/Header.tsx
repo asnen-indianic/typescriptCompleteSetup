@@ -8,21 +8,22 @@ import {
   Animated,
   Platform,
 } from 'react-native';
-import {navigationRef} from '../Navigation/RootNavigation';
+import {navigationRef} from '../../NavigationService';
 import Colors from '../resources/colors';
 import Images from '../resources/images';
 
 interface Props {
-  goBack?: () => void;
+  goBack: () => void;
   translateY?: object;
-  cartNo?: number;
+  cartNo: number;
   simpleView?: Boolean;
   cartCallback?: () => void;
   title?: string;
   tintColor?: string;
 }
 
-const Header: FC<Props> = props => {
+const Header = props => {
+  console.log('alprops is ', props);
   const childView = () => {
     return (
       <View style={[styles.rdView, {}]}>
@@ -53,7 +54,7 @@ const Header: FC<Props> = props => {
   return props?.simpleView ? (
     <View style={styles.headerView}>
       <TouchableOpacity
-        onPress={() => navigationRef.goBack()}
+        onPress={() => console.log('click me')}
         style={{marginLeft: 20}}>
         {imageReturn()}
       </TouchableOpacity>
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
   rdView: {
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
-    backgroundColor: Colors.darkwhite,
+    backgroundColor: Colors.Gray90,
     alignItems: 'center',
     height: 90,
     elevation: 6,

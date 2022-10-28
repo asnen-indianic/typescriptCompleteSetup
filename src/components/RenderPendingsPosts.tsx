@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 60,
   },
   lableStyle: {
-    color: Colors.darkwhite,
+    color: Colors.Gray90,
     fontWeight: 'bold',
     fontSize: 18,
   },

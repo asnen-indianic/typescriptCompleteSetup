@@ -6,15 +6,12 @@ import {Button, CustomInput} from '../../components';
 import Images from '../../resources/images';
 import Colors from '../../resources/colors';
 import {CreateTable} from '../../../Database';
-import {insertSignupData} from '../../networking/apiAction';
+import {useDispatch} from 'react-redux';
+import {signupAction} from '../../redux/actions/authAction';
+// import {insertSignupData} from '../../networking/apiAction';
 let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 interface Props {
   navigation: any;
-}
-interface paramsSignup {
-  name: string;
-  email: string;
-  password: string;
 }
 
 const Signup = ({navigation}: Props) => {
@@ -40,7 +37,7 @@ const Signup = ({navigation}: Props) => {
   const emailRef = React.useRef();
   const passRef = React.useRef();
   const rePassRef = React.useRef();
-
+  const dispatch = useDispatch();
   const validation = () => {
     if (!name) {
       Alert.alert('Alert', 'Enter you name');
@@ -95,13 +92,13 @@ const Signup = ({navigation}: Props) => {
       password,
     };
     if (!!validation()) {
-      const vars = await insertSignupData(data);
-      console.log('varisss ', vars);
-      if (!!vars) {
-        Alert.alert('', 'This email address is already exist in the database');
-      } else {
-        console.log('safe mode we can insert more data');
-      }
+      dispatch(signupAction(data));
+      // console.log('varisss ', vars);
+      // if (!!vars) {
+      //   Alert.alert('', 'This email address is already exist in the database');
+      // } else {
+      //   console.log('safe mode we can insert more data');
+      // }
     }
   };
   const signupView = (typeParam: any) => {
@@ -204,7 +201,7 @@ const styles = StyleSheet.create({
     width: 200,
     alignSelf: 'center',
     marginTop: 60,
-    backgroundColor: Colors.darkwhite,
+    backgroundColor: Colors.Gray90,
   },
   radiousView: {
     flex: 1,

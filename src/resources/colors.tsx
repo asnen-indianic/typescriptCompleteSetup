@@ -3,6 +3,6 @@ const Colors = {
   cGray: '#ccc',
   white: '#fff',
   gray: 'gray',
-  darkwhite: '#e5e5e5',
+  Gray90: '#e5e5e5',
 };
 export default Colors;

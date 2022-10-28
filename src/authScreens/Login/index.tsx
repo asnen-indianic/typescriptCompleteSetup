@@ -6,6 +6,8 @@ import Colors from '../../resources/colors';
 import {Button, CustomInput} from '../../components';
 import Images from '../../resources/images';
 import {CreateTable} from '../../../Database';
+import {useDispatch} from 'react-redux';
+import {loginAction} from '../../redux/actions/authAction';
 let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
 interface Props {
@@ -13,6 +15,8 @@ interface Props {
 }
 
 const Login = ({navigation}: Props) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     CreateTable(
       'loginTable',
@@ -41,7 +45,13 @@ const Login = ({navigation}: Props) => {
   };
   const login = () => {
     if (!!validation()) {
-      console.log('login for thiss ');
+      console.log('cccccc');
+      const loginData = {
+        email,
+        password,
+      };
+      dispatch(loginAction(loginData));
+      // console.log('login for thiss ');
     }
   };
   const loginShow = (typeParam: any) => {
@@ -135,7 +145,7 @@ const styles = StyleSheet.create({
     width: 200,
     alignSelf: 'center',
     marginTop: 60,
-    backgroundColor: Colors.darkwhite,
+    backgroundColor: Colors.Gray90,
   },
   radiousView: {
     flex: 1,

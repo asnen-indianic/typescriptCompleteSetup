@@ -1,20 +1,22 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {FC, useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
 import {isReadyRef, navigationRef} from '../../NavigationService';
-import {checkUser} from '../networking/apiAction';
+// import {checkUser} from '../networking/apiAction';
 import Screens from '../resources/constants';
 import AppNavigator from './AppNavigator';
 import AuthNavigator from './AuthNavigator';
 const Stack = createNativeStackNavigator();
 const MainNavigator = () => {
-  const [user, setUser] = useState<any>([]);
-  useEffect(() => {
-    checkUser().then(res => {
-      console.log('res iss ', res);
-      setUser(res);
-    });
-  }, []);
+  const user = useSelector(state => state.authReducer?.user);
+  console.log('is change user value', user);
+  // useEffect(() => {
+  //   checkUser().then(res => {
+  //     console.log('res iss ', res);
+  //     setUser(res);
+  //   });
+  // }, []);
 
   return (
     <NavigationContainer
@@ -24,7 +26,7 @@ const MainNavigator = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        {user.length > 0 ? (
+        {!!user ? (
           <Stack.Screen component={AppNavigator} name={Screens.AppNavigator} />
         ) : (
           <Stack.Screen
