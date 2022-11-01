@@ -14,7 +14,7 @@ export const appStartAction = () => async (dispatch: any) => {
     });
   }
 };
-export const logout = () => async (dispatch: any) => {
+export const logoutAction = () => async dispatch => {
   console.log('logout...');
   return new Promise(async (resolve, reject) => {
     (await db).transaction(tx => {

@@ -1,50 +1,18 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  StatusBar,
-} from 'react-native';
-import {navigate} from '../../../NavigationService';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {logoutAction} from '../../redux/actions/appAction';
 import Colors from '../../resources/colors';
-import Screens from '../../resources/constants';
-
-const selectNavigation = (screenName: any) => {
-  navigate(screenName, {});
-};
-const logout = () => {
-  return (
-    <TouchableOpacity
-      onPress={() => console.log('logoutttt')}
-      style={styles.logTouch}>
-      <Text style={styles.logout}>Logout</Text>
-    </TouchableOpacity>
-  );
-};
-const cardView = (key: any, screenName: any) => {
-  return (
-    <View style={styles.navView}>
-      <TouchableOpacity
-        onPress={() => {
-          selectNavigation(screenName);
-        }}
-        style={styles.navTouch}>
-        <Text style={styles.touchTitle}>{key}</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
 
 const ScreenSelect = () => {
+  const dispatch = useDispatch();
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={Colors.Gray90} />
-      {logout()}
-      {cardView('Add To Cart Feature', Screens.ProductsList)}
-      {/* {cardView('Firebase Remote', Screens.FBConfig)}
-      {cardView('Add post on firebase database', Screens.AddPost)}
-      {cardView('Chat', Screens.Chat)} */}
+      <TouchableOpacity
+        onPress={() => dispatch(logoutAction())}
+        style={styles.logTouch}>
+        <Text style={styles.logout}>Logout</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -60,6 +28,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.Gray90,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   logTouch: {marginTop: 80, marginLeft: 20},
   logout: {
@@ -69,7 +39,6 @@ const styles = StyleSheet.create({
   },
   navView: {
     backgroundColor: Colors.Gray90,
-    // flex: 1,
     marginTop: 20,
   },
   navTouch: {
