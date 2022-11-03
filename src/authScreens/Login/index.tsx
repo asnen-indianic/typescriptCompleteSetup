@@ -1,13 +1,21 @@
 import React, {useEffect} from 'react';
 import {useState} from 'react';
-import {View, Text, StyleSheet, Alert, TextInput} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Colors from '../../resources/colors';
 import {Button, CustomInput} from '../../components';
 import Images from '../../resources/images';
 import {CreateTable} from '../../../Database';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {loginAction} from '../../redux/actions/authAction';
+import {addEditDeleteTodo} from '../../redux/reducers/todos';
 let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
 interface Props {
@@ -15,7 +23,11 @@ interface Props {
 }
 
 const Login = ({navigation}: Props) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
+
+  const {todos} = useSelector(state => state.todos);
+  // const {testing} = useSelector(state => state.todos);
 
   useEffect(() => {
     CreateTable(
@@ -29,6 +41,8 @@ const Login = ({navigation}: Props) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [todo, setTodo] = useState('');
 
   const validation = () => {
     if (!email) {
@@ -94,6 +108,20 @@ const Login = ({navigation}: Props) => {
         <Text style={styles.welcome}>Welcome!</Text>
         <View style={styles.radiousView}>
           <CustomInput
+            title={'Add a Todo'}
+            img={Images.user}
+            returnKeyType={'done'}
+            value={todo}
+            placeholder="Your todo here"
+            placeholderTextColor="gray"
+            onChangeText={todo => {
+              setTodo(todo);
+            }}
+            onSubmitEditing={() => {
+              login();
+            }}
+          />
+          {/* <CustomInput
             autoFocus={true}
             title={'Email'}
             inputRef={forEmail}
@@ -125,9 +153,36 @@ const Login = ({navigation}: Props) => {
             onSubmitEditing={() => {
               login();
             }}
-          />
-          {loginShow('Login')}
-          {signupShow('Signup')}
+          /> */}
+          {/* {loginShow('Login')}
+          {signupShow('Signup')} */}
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 60,
+              marginTop: 30,
+              marginHorizontal: 20,
+              backgroundColor: 'red',
+            }}
+            onPress={() => {
+              if (!!todo) {
+                dispatch(addEditDeleteTodo(todo));
+                setTodo('');
+              } else {
+                Alert.alert('Please add todo');
+              }
+
+              console.log('Click onpress');
+            }}>
+            <Text>Add Todo</Text>
+          </TouchableOpacity>
+          <Text style={{marginLeft: 20, marginTop: 20}}>
+            Here our reducer todo : {todos}
+          </Text>
+          <Text style={{marginLeft: 20, marginTop: 20}}>
+            {/* Here is testing todo : {testing} */}
+          </Text>
         </View>
       </View>
     </KeyboardAwareScrollView>
